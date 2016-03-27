@@ -1,5 +1,5 @@
-# Team Name: 
-## Ariel Levy, Eric Stringham, Sally Bao
+# Team Name: 666 
+### Ariel Levy, Eric Stringham, Sally Bao
 
 <data description>
 
