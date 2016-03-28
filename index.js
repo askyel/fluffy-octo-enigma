@@ -38,15 +38,18 @@ var changeCandidate = function(name){
 						.attr("class", "node")
 						.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
+				node.append("circle")
+						.style("fill", function(d) { return color(d.packageName); })
+						.transition().duration(750)
+						.delay(function(d, i){return i * 5})
+						.attrTween("r", function(d) {
+								var i = d3.interpolate(0, d.r);
+								return function(t){ return d.r = i(t);};
+						});
+
 				node.append("title")
 						.text(function(d) { return d.className + ": " + format(d.value); });
-
-				node.append("circle")
-						.transition().duration(1200)
-						.attr("r", function(d) { return d.r; })
-						.style("fill", function(d) { return color(d.packageName); });
-					
-
+				
 				node.append("text")
 						.attr("dy", ".3em")
 						.style("text-anchor", "middle")
