@@ -86,6 +86,7 @@ $(document).ready(function(){
     var index = Math.floor(Math.random() * can.length);
     changeCandidate(can[index]);
 
+	/**
     $(".dropdown-menu li a").click(function(e){
 				e.preventDefault();
 				var text = $(this).text();
@@ -94,4 +95,31 @@ $(document).ready(function(){
 						.html(text+' <span class="caret"></span>');
 				changeCandidate(text.toLowerCase());
     });
+	*/
+
+	$("#candidates .list-group-item").click(function(e){
+		e.preventDefault();
+		var text = $(this).text();
+		changeCandidate(text.toLowerCase());
+		$("#candidates .list-group-item").removeClass("active");
+		$(this).addClass("active");
+	});
 })
+
+for (i in democrats) {
+	d = democrats[i];
+	$("#candidates").append(
+			"<a href='#' class='list-group-item'>" + 
+			"<img src='images/"+d+".jpg' alt='"+d+"' class='img-rounded'>" + 
+			d + "</a>"
+	);
+};
+
+for (i in republicans) {
+	r = republicans[i];
+	$("#candidates").append(
+			"<a href='#' class='list-group-item'>" + 
+			"<img src='images/"+r+".jpg' alt='"+r+"' class='img-rounded'>" + 
+			r + "</a>"
+	);
+};
