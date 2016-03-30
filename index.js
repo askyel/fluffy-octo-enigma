@@ -1,4 +1,15 @@
+/* global d3 */
+
 console.log("loaded");
+
+var candidate = null;
+var label = d3.select('#threshold-label');
+var threshold = d3.select('#threshold');
+threshold.on('input', updateThreshold);
+threshold.on('change', function() { changeCandidate(candidate) });
+function updateThreshold() {
+	label.text('Tolerance = ' + threshold.property('value'));
+}
 
 var republicans = ["bush", "carson", "christie", "cruz", "graham", "huckabee", "paul", "rubio", "santorum", "trump"];
 
@@ -20,14 +31,21 @@ var svg = d3.select("body").append("svg")
     .attr("class", "bubble");
 
 //create nodes and set attributes based on json data
-var makeBubbles = function(error, root){
+var makeBubbles = function(error, root) {
     if (error) throw error;
 
-    var max = d3.max(root.children, function(d){return d.size;});
+    var max = d3.max(root.children, function(d) {return d.size;});
+    
+	threshold
+		.attr('max', max);
+	updateThreshold();
 
     var node = svg.selectAll(".node")
-				.data(bubble.nodes(classes(root))
-							.filter(function(d) { return !d.children; }))
+				.data(
+					bubble.nodes(
+						classes(root)).filter(function(d) {
+							return !d.children && d.value >= threshold.property('value');
+						}))
 				.enter().append("g")
 				.attr("class", "node")
 				.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -48,10 +66,11 @@ var makeBubbles = function(error, root){
 				.attr("dy", ".3em")
 				.style("text-anchor", "middle")
 				.text(function(d) { return d.className.substring(0, d.r / 3); });
-}
+};
 
 //change the candidate data to the selected one
-var changeCandidate = function(name){
+var changeCandidate = function(name) {
+	candidate = name;
     var path;
     if (republicans.indexOf(name) != -1){
 				path = "json/r-" + name + ".json";
@@ -62,7 +81,7 @@ var changeCandidate = function(name){
 				color.range(["white", "blue"]);
     }
     d3.select("svg").selectAll(".node").remove();
-    d3.json(path, function(error, root) {makeBubbles(error, root);});
+    d3.json(path, makeBubbles);
 };
 
 // Returns a flattened hierarchy containing all leaf nodes under the root.
@@ -80,7 +99,7 @@ function classes(root) {
 
 
 $(document).ready(function(){
-    d3.select(self.frameElement).style("height", diameter + "px");
+    d3.select(window.self.frameElement).style("height", diameter + "px");
     /*
 			var can = democrats.concat(republicans);
 			var index = Math.floor(Math.random() * can.length);
@@ -106,8 +125,9 @@ $(document).ready(function(){
 				d3.select(".profile").select("p")
 						.text(text.toUpperCase());
 		});
-})
+});
 
+var i, r, d;
 for (i in democrats) {
 		d = democrats[i];
 		$("#candidates").append(
@@ -115,7 +135,7 @@ for (i in democrats) {
 						"<img src='images/"+d+".jpg' alt='"+d+"' class='img-rounded'>" + 
 						d + "</a>"
 		);
-};
+}
 
 for (i in republicans) {
 		r = republicans[i];
@@ -124,4 +144,5 @@ for (i in republicans) {
 						"<img src='images/"+r+".jpg' alt='"+r+"' class='img-rounded'>" + 
 						r + "</a>"
 		);
-};
+}
+
