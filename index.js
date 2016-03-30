@@ -81,45 +81,47 @@ function classes(root) {
 
 $(document).ready(function(){
     d3.select(self.frameElement).style("height", diameter + "px");
-    
-    var can = democrats.concat(republicans);
-    var index = Math.floor(Math.random() * can.length);
-    changeCandidate(can[index]);
+    /*
+			var can = democrats.concat(republicans);
+			var index = Math.floor(Math.random() * can.length);
+			changeCandidate(can[index]);
+		*/
 
-	/**
-    $(".dropdown-menu li a").click(function(e){
+		$("#candidates .list-group-item").click(function(e){
 				e.preventDefault();
 				var text = $(this).text();
-				$(this).parents('.dropdown')
-						.find('.dropdown-toggle')
-						.html(text+' <span class="caret"></span>');
 				changeCandidate(text.toLowerCase());
-    });
-	*/
-
-	$("#candidates .list-group-item").click(function(e){
-		e.preventDefault();
-		var text = $(this).text();
-		changeCandidate(text.toLowerCase());
-		$("#candidates .list-group-item").removeClass("active");
-		$(this).addClass("active");
-	});
+				$("#candidates .list-group-item").removeClass("active");
+				$(this).addClass("active");
+				
+				d3.select(".profile").select("img")
+						.transition()
+						.style("opacity", 0)
+						.each("end", function(){
+								d3.select(this)
+										.attr("src", "images/"+text+".jpg")
+										.transition()
+										.style("opacity", 1);
+						});
+				d3.select(".profile").select("p")
+						.text(text.toUpperCase());
+		});
 })
 
 for (i in democrats) {
-	d = democrats[i];
-	$("#candidates").append(
-			"<a href='#' class='list-group-item'>" + 
-			"<img src='images/"+d+".jpg' alt='"+d+"' class='img-rounded'>" + 
-			d + "</a>"
-	);
+		d = democrats[i];
+		$("#candidates").append(
+				"<a href='#' class='list-group-item'>" + 
+						"<img src='images/"+d+".jpg' alt='"+d+"' class='img-rounded'>" + 
+						d + "</a>"
+		);
 };
 
 for (i in republicans) {
-	r = republicans[i];
-	$("#candidates").append(
-			"<a href='#' class='list-group-item'>" + 
-			"<img src='images/"+r+".jpg' alt='"+r+"' class='img-rounded'>" + 
-			r + "</a>"
-	);
+		r = republicans[i];
+		$("#candidates").append(
+				"<a href='#' class='list-group-item'>" + 
+						"<img src='images/"+r+".jpg' alt='"+r+"' class='img-rounded'>" + 
+						r + "</a>"
+		);
 };

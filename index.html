@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	<title>666</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	
@@ -27,35 +28,26 @@
 		height: 3.2em;
 		margin: 0px 15px 0px 5px;
 	}
+	.profile {
+		position: fixed;
+		top: 40px;
+		right: 10px;
+	}
+	.profile img {
+		width: 400px;
+		height: 600px;
+		opacity: 0;
+	}
+
+	.profile p {
+		font-size: 5em;
+	}
 	</style>
 	<body>
-		<!--
-		<div class="dropdown">
-			<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Candidates
-				<span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li id ="dems" class="dropdown-header">Democrats</li>
-				<li><a href="#">Clinton</a></li>
-				<li><a href="#">Omalley</a></li>
-				<li><a href="#">Sanders</a></li>
-				<li class="divider"></li>
-				<li id="reps" class="dropdown-header">Republicans</li>
-				<li><a href="#">Bush</a></li>
-				<li><a href="#">Carson</a></li>
-				<li><a href="#">Christie</a></li>
-				<li><a href="#">Cruz</a></li>
-				<li><a href="#">Graham</a></li>
-				<li><a href="#">Huckabee</a></li>
-				<li><a href="#">Paul</a></li>
-				<li><a href="#">Rubio</a></li>
-				<li><a href="#">Santorum</a></li>
-				<li><a href="#">Trump</a></li>
-			</ul>
-		</div>
-		-->
-
+		<h1 style="text-align:center;">What Does the Candidate Say?</h1>
 		<div id="candidates" class="list-group">
 		</div>
+		<div class="profile"><img class="img-rounded"><p></p></div>
 	</body>
 	<script src="https://d3js.org/d3.v3.min.js"></script>
 	<script src="index.js"></script>
